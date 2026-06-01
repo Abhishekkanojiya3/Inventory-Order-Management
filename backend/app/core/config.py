@@ -10,6 +10,7 @@ class Settings(BaseSettings):
         default="postgresql+psycopg2://postgres:postgres@localhost:5432/inventory_app"
     )
     CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
+    CORS_ALLOW_ORIGIN_REGEX: str = r"https://.*\.vercel\.app"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

@@ -17,6 +17,7 @@ def create_app() -> FastAPI:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins,
+        allow_origin_regex=settings.CORS_ALLOW_ORIGIN_REGEX,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
@@ -30,6 +31,10 @@ def create_app() -> FastAPI:
     @app.on_event("startup")
     def ensure_tables() -> None:
         Base.metadata.create_all(bind=engine)
+
+    @app.get("/")
+    def root() -> dict[str, str]:
+        return {"status": "ok", "service": settings.PROJECT_NAME}
 
     return app
 
